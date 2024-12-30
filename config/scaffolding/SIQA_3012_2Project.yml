@@ -10,6 +10,11 @@ packages:
 - name: WmJDBCAdapter
   wpmServer: https://packages.webmethods.io
   wpmRegistry: licensed
+- name: TPP_services_in_FCS
+  gitServerName: SIQA_kvv_wm_io
+  gitUrl: https://github.webmethods.io/kvv
+  gitUsername: kvv
+  gitBranch: main
 services:
 - serviceName: project.siqa_3012_2.integrations:SIQAAdapterFlow
   packages:
@@ -20,8 +25,19 @@ services:
   - name: SIQA_3012_2Project
     version: "1.0"
 configurationVariables:
+  jdbc.jdbcTestPool.waitingThread: "0"
+  jdbc.jdbcTestPool.minConns: "0"
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.blockingTimeout
+  : "1000"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.keyStore
   : ""
+  jdbc.jdbcTestPool.expireTime: "60000"
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.databaseName
+  : SIQACloud
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.transactionType
+  : NO_TRANSACTION
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.otherProperties
+  : loginTimeout=60;driverType=thin;
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.dbType
   : MSSQL
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.maximumPoolSize
@@ -31,26 +47,6 @@ configurationVariables:
   : vmiboint01
   jdbc.jdbcTestPool.maxConns: "10"
   jdbc.jdbcTestPool.userid: root
-  jdbc.jdbcTestPool.spyenabled: "false"
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.trustStore
-  : ""
-  jdbc.jdbcTestPool.snoopenabled: "false"
-  jdbc.jdbcTestPool.spyparms: SpyAttributes=(log=(file)logs/spy/jdbcTestPool.log;logTName=yes;timestamp=yes)
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.poolIncrementSize
-  : "1"
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.minimumPoolSize
-  : "1"
-  jdbc.jdbcTestPool.waitingThread: "0"
-  jdbc.jdbcTestPool.minConns: "0"
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.blockingTimeout
-  : "1000"
-  jdbc.jdbcTestPool.expireTime: "60000"
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.databaseName
-  : SIQACloud
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.transactionType
-  : NO_TRANSACTION
-  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.otherProperties
-  : loginTimeout=60;driverType=thin;
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.startupBackoffSecs
   : "10"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.poolable
@@ -58,23 +54,32 @@ configurationVariables:
   jdbc.jdbcTestPool.driverAlias: MySQL Database Java Connector Driver
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.datasourceClass
   : com.wm.dd.jdbcx.sqlserver.SQLServerDataSource
+  jdbc.jdbcTestPool.spyenabled: "false"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.portNumber
   : "1433"
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.trustStore
+  : ""
+  jdbc.jdbcTestPool.snoopenabled: "false"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.networkProtocol
   : tcp
   jdbc.jdbcTestPool.password: "{AES}er+I3U8nDVm8F4DBRST1+A=="
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.expireTimeout
   : "1000"
+  jdbc.jdbcTestPool.spyparms: SpyAttributes=(log=(file)logs/spy/jdbcTestPool.log;logTName=yes;timestamp=yes)
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionEnabled
   : "false"
   jdbc.jdbcTestPool.dbURL: jdbc:mysql://mysql.test.local:3306/webm
   jdbc.jdbcTestPool.poolThreshold: "0"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.startupRetryCount
   : "0"
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.poolIncrementSize
+  : "1"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.heartBeatInterval
   : "0"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.password
   : "{AES}B2Xqma4Ost5nVUiXctJydQ=="
+  ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionManagerSettings.minimumPoolSize
+  : "1"
   ? artConnection.SIQA_3012_2Project.project.siqa_3012_2.WmJDBCAdapter.com_wm_adapter_wmjdbc_JDBCAdapter.connections.Database_1.connectionSettings.user
   : sa
   jdbc.jdbcTestPool.useSSL: "false"
